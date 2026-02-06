@@ -4,12 +4,28 @@ import math
 import matplotlib.pyplot as plt
 import io
 import base64
+import sqlite3
 
 # Load model
 model = pickle.load(open('Model/model.pkl', 'rb'))
 
 app = Flask(__name__)
 
+def init_db():
+    conn = sqlite3.connect("crime.db")
+    cursor = conn.cursor()
+
+    cursor.execute("""
+    CREATE TABLE IF NOT EXISTS predictions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        city TEXT,
+        year INTEGER,
+        crime_rate REAL
+    )
+    """)
+
+    conn.commit()
+    conn.close()
 
 @app.route('/')
 def index():
@@ -58,10 +74,23 @@ def predict_result():
     crime_rate = model.predict([[year, int(city_code), pop, int(crime_code)]])[0]
     crime_rate = round(crime_rate, 2)
 
-    cases = math.ceil(crime_rate * pop)
-
     city_name = city_names[str(city_code)]
     crime_type = crimes_names[str(crime_code)]
+
+    # ---------- SAVE TO DATABASE ----------
+    conn = sqlite3.connect("crime.db")
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "INSERT INTO predictions (city, year, crime_rate) VALUES (?, ?, ?)",
+        (city_name, year, crime_rate)
+    )
+
+    conn.commit()
+    conn.close()
+
+    cases = math.ceil(crime_rate * pop)
+
 
     # ---------- CRIME STATUS & GLOW ----------
     if crime_rate <= 1:
@@ -124,4 +153,5 @@ def predict_result():
 
 
 if __name__ == '__main__':
+    init_db()
     app.run(host='0.0.0.0', port=5000)
