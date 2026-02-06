@@ -152,17 +152,19 @@ def predict_result():
     )
 @app.route('/history')
 def history():
+    try:
+        conn = sqlite3.connect("crime.db")
+        cursor = conn.cursor()
 
-    conn = sqlite3.connect("crime.db")
-    cursor = conn.cursor()
+        cursor.execute("SELECT * FROM predictions ORDER BY id DESC")
+        records = cursor.fetchall()
 
-    cursor.execute("SELECT * FROM predictions ORDER BY id DESC")
-    records = cursor.fetchall()
+        conn.close()
 
-    conn.close()
+        return render_template("history.html", data=records)
 
-    return render_template("history.html", data=records)
-
+    except Exception as e:
+        return f"<h2>Error:</h2><pre>{str(e)}</pre>"
 
 if __name__ == '__main__':
     init_db()
