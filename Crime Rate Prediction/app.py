@@ -150,6 +150,18 @@ def predict_result():
         status_color=status_color,
         graph_url=graph_url
     )
+@app.route('/history')
+def history():
+
+    conn = sqlite3.connect("crime.db")
+    cursor = conn.cursor()
+
+    cursor.execute("SELECT * FROM predictions ORDER BY id DESC")
+    records = cursor.fetchall()
+
+    conn.close()
+
+    return render_template("history.html", data=records)
 
 
 if __name__ == '__main__':
