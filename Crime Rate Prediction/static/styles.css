@@ -89,6 +89,11 @@ select{
     padding-bottom: 50px;
     border-bottom: 2px solid;
 }
+.button a {
+    margin-top: 10px;
+    display: inline-block;
+}
+
 table.table2{
     margin-top: 50px;
     margin-left: auto;
