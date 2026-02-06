@@ -94,12 +94,6 @@ select{
     padding-bottom: 50px;
     border-bottom: 2px solid;
 }
-a.btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
 
 table.table2{
     margin-top: 50px;
@@ -188,3 +182,15 @@ td.result{
     border-radius: 10px;
 }
 
+a.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    text-decoration: none !important;
+    color: #fff2df;
+
+    padding: 5px;
+    width: 200px;
+    height: 50px;
+}
