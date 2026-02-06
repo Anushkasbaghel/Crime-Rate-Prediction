@@ -63,9 +63,14 @@ select{
 
 .button{
     margin: 25px;
-    text-align: center; 
-    padding: 20px;   
+    text-align: center;
+    padding: 20px;
+
+    display: flex;
+    justify-content: center;
+    gap: 20px;
 }
+
 .btn{
     padding: 5px;
     width: 200px;
@@ -88,6 +93,12 @@ select{
 .prediction{
     padding-bottom: 50px;
     border-bottom: 2px solid;
+}
+a.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
 }
 
 table.table2{
