@@ -90,8 +90,9 @@ select{
     border-bottom: 2px solid;
 }
 .button a {
-    margin-top: 10px;
-    display: inline-block;
+    margin: 25px;
+    text-align: center; 
+    padding: 20px;
 }
 
 table.table2{
